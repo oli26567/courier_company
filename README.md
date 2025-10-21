@@ -1,59 +1,67 @@
-# Courier Company Desk Simulation
+# Courier Company Desk Simulation  
 
-This project is a Java-based application backed by a PostgreSQL database, designed to simulate the front-desk operations of a courier company. It models real-world interactions between couriers, customers, and receptionists, managing deliveries, package statuses, and transaction records.
+This project is a **Java-based system** backed by a **PostgreSQL database**, simulating the daily operations of a courier company desk.  
+It allows administrators, couriers, and customers to manage deliveries, track packages, and interact through a console-driven menu interface with secure, password-protected login.  
 
 ---
 
-## Functionality
+## Functionality  
 
-- Package Tracking:
-  - Uses the SystemManager class to register, update, and retrieve package statuses by tracking ID.
-- Controllers & Services:
-  - `ControllerFactory` dynamically injects `CustomerService` and `CourierService` into the respective controllers.  
-  - `CustomerInterfaceController` and `CourierInterfaceController` manage client and courier actions.
-- Controllers & Services:  
-  - `ControllerFactory` dynamically injects `CustomerService` and `CourierService` into the respective controllers.  
-  - `CustomerInterfaceController` and `CourierInterfaceController` manage client and courier actions.  
-- Database Integration:
-  - PostgreSQL stores client, product, order, and log data with proper relational links.  
-- Status Management:
-  - Packages move through states: *Booked*, *In Transit*, *Delivered*, *Held*, or *Returned*.  
-- User Roles:
-  - Customers create and view deliveries.  
-  - Couriers update delivery statuses.  
-  - Receptionists and managers view operational and financial data.
+- **User Authentication:**  
+  - All users log in with credentials stored securely in the database.  
+  - Access levels are role-based: *Admin*, *Courier*, or *Customer*.  
+
+- **Role-Based Menus:**  
+  - `WelcomePage` serves as the entry point for users to select and log into their role.  
+  - `AdminMenu`, `CourierMenu`, and `CustomerMenu` provide separate interfaces for each role.  
+
+- **Core Operations:**  
+  - **Admin:** Manages users, couriers, and system statistics.  
+  - **Courier:** Views assigned deliveries and updates package statuses.  
+  - **Customer:** Books deliveries, views package details, and tracks shipments.  
+
+- **Database Integration:**  
+  - `DatabaseConnection` handles all PostgreSQL connections and SQL operations.  
+  - Data for clients, packages, and delivery logs are stored and managed in relational tables.  
+
+- **Package Tracking:**  
+  - The `Package` class maintains delivery information and status transitions such as *Booked*, *In Transit*, *Delivered*, or *Returned*.  
 
 ---
 
 ## How It Works  
 
-`SystemManager` maintains an internal list of all packages and provides methods to add, update, and query them.  
-The controllers interact with the database through dedicated service classes to handle booking, delivery, and billing.  
-`ControllerFactory` ensures that each controller receives the appropriate service dependencies for modular and testable code.  
+On startup, the `WelcomePage` prompts the user to log in or register.  
+Once authenticated, the system loads the corresponding menu and actions for that role.  
+Each menu action (booking, updating, viewing, or managing) executes SQL queries through the `DatabaseConnection` class, ensuring real-time synchronization with the PostgreSQL database.  
+The modular design separates logic into role-specific classes (`AdminActions`, `CourierActions`, `CustomerActions`) for clarity and maintainability.  
 
 ---
 
 ## Technologies Used  
 
-- Language: Java (JavaFX for UI)  
-- Database: PostgreSQL (via JDBC)  
-- Architecture: MVC-style layered structure  
-  - `controller/` – Handles UI logic and interactions.  
-  - `core/` – Business logic (`Package`, `SystemManager`).  
-  - `service/` – Database communication and main program flow.
- 
+- **Language:** Java  
+- **Interface:** Console-based menu system  
+- **Database:** PostgreSQL (via JDBC)  
+- **Architecture:** Modular and role-based  
+  - `AdminMenu`, `CourierMenu`, `CustomerMenu` — user navigation.  
+  - `AdminActions`, `CourierActions`, `CustomerActions` — operational logic.  
+  - `DatabaseConnection` — persistent database management.  
+  - `Package` — delivery data model.  
+
 ---
 
 ## Future Improvements  
 
-- Integrate real courier and zone tracking.  
-- Build a graphical dashboard for live monitoring.  
-- Generate monthly and yearly reports automatically.
+- Add delivery route optimization and courier zone assignment.  
+- Implement graphical (GUI) or web-based interface.  
+- Introduce real-time delivery notifications via email or SMS.  
+- Include financial reports and performance analytics.  
 
 ---
 
 ## Applications  
 
-- Educational Tool: Demonstrates Java–PostgreSQL integration and OOP principles.  
-- Courier Simulation: Models realistic package lifecycle and system management.  
-- Business Prototype: Base for logistics or delivery management systems.  
+- **Educational Tool:** Demonstrates Java–PostgreSQL integration and secure console design.  
+- **Courier Simulation:** Models authentication, logistics operations, and database-driven data flow.  
+- **Business Prototype:** Scalable base for courier or parcel tracking management systems.  
